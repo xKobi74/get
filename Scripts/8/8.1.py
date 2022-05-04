@@ -19,8 +19,8 @@ fig.set_figheight(12)
 
 ax.scatter(xarr[i], yarr[i], color="blue", marker="o", s=40)
 ax.plot(xarr, yarr, color="blue", linewidth=1, alpha=0.5)
-plt.xlim([0, 85])
-plt.ylim([0, 3.5])
+plt.xlim([0, xarr[-1] * 1.05])
+plt.ylim([0, yarr.max() * 1.05])
 
 plt.title(label="Заряд-разрялная кривая конденсатора в RC-цепи", fontsize=20)
 plt.xlabel("t, с", fontsize=20)
@@ -39,7 +39,11 @@ ax.grid(which='major', color = 'black')
 ax.minorticks_on()
 ax.grid(which='minor', color = 'gray', linestyle = ':')
 
-ax.text(10, 1, "Время заряда: 41,4с\nВремя разряда: 40,5с", fontsize=20)
+imax = yarr.argmax()
+tmax = float(xarr[imax])
+traz = float(xarr[-1]) - tmax
+umax = yarr.max()
+ax.text(tmax / 2, umax / 2, "Время заряда: {:.1f}с\nВремя разряда: {:.1f}с".format(tmax, traz), fontsize=20)
 
 plt.savefig("grath.svg", dpi=400)
 plt.show()
